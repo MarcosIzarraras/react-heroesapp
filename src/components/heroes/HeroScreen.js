@@ -1,12 +1,16 @@
 import React, { useMemo } from 'react'
 import { Redirect, useParams } from 'react-router'
 import { getHeroesById } from '../../selectors/getHeroById';
+const img = require.context('../../assets/heroes', true);
 
 export const HeroScreen = ({ history }) => {
 
+    
     const { heroeId } = useParams();
     const hero = useMemo(() => getHeroesById(heroeId), [heroeId]) ;
 
+    // console.log(require.context('../../assets/heroes', true, `/${ heroeId }.jpg$/`));
+    
     if (!hero) { return <Redirect to="/" /> }
 
     const {
@@ -27,7 +31,7 @@ export const HeroScreen = ({ history }) => {
     return (
         <div className="row mt-5">
             <div className="col-4">
-                <img src={`../assets/heroes/${ heroeId }.jpg`}  className="img-thumbnail animate__animated animate__fadeInLeft" alt={ superhero } />
+                <img src={img(`./${ heroeId }.jpg`).default}  className="img-thumbnail animate__animated animate__fadeInLeft" alt={ superhero } />
             </div>
             <div className="col-8 animate__animated animate__fadeIn">
                     <h3>{ superhero }</h3>
